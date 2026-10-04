@@ -17,7 +17,6 @@ class _TransactionFormState extends State<TransactionForm> {
   void _onSubmitForm() {
     final title = titleController.text;
     final value = double.tryParse(valueController.text) ?? 0.0;
-    print('Title: $title, Value: $value');
     if (title.isEmpty || value <= 0) {
       return;
     }
@@ -47,7 +46,9 @@ class _TransactionFormState extends State<TransactionForm> {
               children: [
                 TextButton(
                   onPressed: _onSubmitForm,
-                  style: TextButton.styleFrom(foregroundColor: Colors.purple),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                  ),
                   child: Text('Nova transação'),
                 ),
               ],

@@ -27,6 +27,10 @@ class ExpensesApp extends StatelessWidget {
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
+          labelLarge: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.purple,
@@ -55,6 +59,7 @@ class ExpensesApp extends StatelessWidget {
           seedColor: Colors.amber,
           primary: Colors.purple,
           secondary: Colors.amber,
+          error: Colors.red,
         ),
       ),
     );
@@ -82,6 +87,36 @@ class _MyHomePageState extends State<MyHomePage> {
       value: 211.30,
       date: DateTime.now().subtract(Duration(days: 5)),
     ),
+    Transaction(
+      id: 't3',
+      title: 'Conta de Luz',
+      value: 211.30,
+      date: DateTime.now().subtract(Duration(days: 5)),
+    ),
+    Transaction(
+      id: 't4',
+      title: 'Conta de Luz',
+      value: 211.30,
+      date: DateTime.now().subtract(Duration(days: 5)),
+    ),
+    Transaction(
+      id: 't5',
+      title: 'Conta de Luz',
+      value: 211.30,
+      date: DateTime.now().subtract(Duration(days: 5)),
+    ),
+    Transaction(
+      id: 't6',
+      title: 'Conta de Luz',
+      value: 211.30,
+      date: DateTime.now().subtract(Duration(days: 5)),
+    ),
+    Transaction(
+      id: 't7',
+      title: 'Conta de Luz',
+      value: 211.30,
+      date: DateTime.now().subtract(Duration(days: 5)),
+    ),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -92,17 +127,27 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addTransaction({required String title, required double value}) {
+  void _addTransaction({
+    required String title,
+    required double value,
+    required DateTime date,
+  }) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
     setState(() {
       _transactions.add(newTransaction);
     });
     Navigator.of(context).pop();
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((transaction) => transaction.id == id);
+    });
   }
 
   void _openTransactionFormModal(BuildContext context) {
@@ -139,7 +184,10 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(transactions: _recentTransactions),
+            TransactionList(
+              transactions: _recentTransactions,
+              onDelete: _deleteTransaction,
+            ),
           ],
         ),
       ),
